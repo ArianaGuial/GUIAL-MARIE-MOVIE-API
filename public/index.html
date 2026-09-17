@@ -3,108 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Collection</title>
+    <title>MOVIE COLLECTION</title>
+    <!-- Importing a modern Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            color: #333;
+        /* CSS Variables for easy color changes */
+        :root {
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --text-main: #e2e2e2;
+            --text-muted: #a0a0b0;
+            --accent: #45c3e9;
+            --accent-hover: #87ce96;
+            --border-color: #0f3460;
         }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
         h1 {
             text-align: center;
-            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #ffffff;
+            letter-spacing: 1px;
         }
+
         h2 {
-            margin-top: 20px;
-            margin-bottom: 10px;
+            font-weight: 400;
+            font-size: 1.2rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+
+        /* Form styling */
         .form-container {
             display: flex;
+            flex-wrap: wrap;
             gap: 15px;
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             margin-bottom: 10px;
         }
+
         input {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 12px 15px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s ease;
         }
-        input[type="text"] { width: 200px; }
+
+        input:focus {
+            border-color: var(--accent);
+        }
+
+        input[type="text"] { flex: 1; min-width: 150px; }
         input[type="number"] { width: 100px; }
+
+        /* General Button Styling */
         button {
-            padding: 8px 15px;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 12px 24px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
         }
+
         button:hover {
-            background-color: #e0e0e0;
+            background-color: var(--accent-hover);
         }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Message styling */
         #message {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 14px;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            min-height: 20px; /* Keeps layout from jumping */
+            padding-left: 5px;
         }
+
+        /* Table styling */
+        .table-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
             text-align: left;
         }
-        th {
-            background-color: #f9f9f9;
-            font-weight: bold;
+
+        th, td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
         }
+
+        th {
+            background-color: #1f2b4d;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .load-btn-container {
+            margin-bottom: 20px;
+        }
+        
+        /* Load Button now matches the Accent color */
         .load-btn {
-            margin-top: 10px;
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .load-btn:hover {
+            background-color: var(--accent-hover);
         }
     </style>
 </head>
 <body>
 
-    <h1>Movie Collection</h1>
+    <div class="container">
+        <h1>Movie Collection</h1>
 
-    <h2>Add Movie</h2>
-    <div class="form-container">
-        <input type="text" id="title" placeholder="Inception">
-        <input type="text" id="genre" placeholder="Science Fiction">
-        <input type="number" id="year" placeholder="2010">
-        <button onclick="addMovie()">Add Movie</button>
+        <h2>Add Movie</h2>
+        <div class="form-container">
+            <input type="text" id="title" placeholder="Title (e.g., Inception)">
+            <input type="text" id="genre" placeholder="Genre (e.g., Sci-Fi)">
+            <input type="number" id="year" placeholder="Year">
+            <button onclick="addMovie()">Add Movie</button>
+        </div>
+        <div id="message"></div>
+
+        <h2>Movies</h2>
+        <div class="load-btn-container">
+            <button class="load-btn" onclick="loadMovies()">Load Movies</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Year</th>
+                    </tr>
+                </thead>
+                <tbody id="movieTableBody">
+                    <!-- Movies will be inserted here dynamically -->
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div id="message"></div>
-
-    <h2>Movies</h2>
-    <button class="load-btn" onclick="loadMovies()">Load Movies</button>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Year</th>
-            </tr>
-        </thead>
-        <tbody id="movieTableBody">
-        </tbody>
-    </table>
 
     <script>
         const API_URL = '/api/movies';
         const messageDiv = document.getElementById('message');
         const tableBody = document.getElementById('movieTableBody');
 
+        // Function to fetch and display movies
         async function loadMovies() {
             try {
                 const response = await fetch(API_URL);
                 const movies = await response.json();
 
+                // Clear existing table rows
                 tableBody.innerHTML = '';
 
+                if (movies.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#a0a0b0;">No movies in the collection yet.</td></tr>';
+                    return;
+                }
+
+                // Loop through movies and create table rows
                 movies.forEach(movie => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
@@ -118,17 +232,20 @@
             } catch (error) {
                 console.error('Error loading movies:', error);
                 messageDiv.textContent = 'Error loading movies.';
+                messageDiv.style.color = '#e94560'; // Accent color for errors
             }
         }
 
+        // Function to add a new movie
         async function addMovie() {
             const title = document.getElementById('title').value;
             const genre = document.getElementById('genre').value;
             const year = document.getElementById('year').value;
 
+            // Simple client-side validation
             if (!title || !genre || !year) {
                 messageDiv.textContent = 'Please fill in all fields.';
-                messageDiv.style.color = 'red';
+                messageDiv.style.color = '#e94560'; 
                 return;
             }
 
@@ -144,24 +261,27 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    messageDiv.textContent = data.message;
-                    messageDiv.style.color = 'black';
+                    messageDiv.textContent = data.message; // "Movie added successfully"
+                    messageDiv.style.color = '#4ade80'; // A nice success green color
                     
+                    // Clear input fields
                     document.getElementById('title').value = '';
                     document.getElementById('genre').value = '';
                     document.getElementById('year').value = '';
 
+                    // Refresh the list after adding
                     loadMovies();
                 } else {
                     messageDiv.textContent = data.error;
-                    messageDiv.style.color = 'red';
+                    messageDiv.style.color = '#e94560';
                 }
             } catch (error) {
                 console.error('Error adding movie:', error);
                 messageDiv.textContent = 'Error adding movie.';
-                messageDiv.style.color = 'red';
+                messageDiv.style.color = '#e94560';
             }
         }
     </script>
+
 </body>
 </html>
